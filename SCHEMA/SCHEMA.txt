@@ -1,0 +1,48 @@
+CREATE SCHEMA devsbets;
+
+USE devsbets;
+
+CREATE TABLE Users 
+( 
+ id INT unsigned PRIMARY KEY AUTO_INCREMENT, 
+ name varchar(100) not null,  
+ login  varchar(50) not null,  
+ password  varchar(50) not null,  
+ status tinyint(1) unsigned not null default'1',
+ unique (login)
+); 
+
+CREATE TABLE Bets 
+( 
+id INT unsigned PRIMARY KEY AUTO_INCREMENT,
+ result_team_a smallint unsigned not null,  
+ result_team_b smallint unsigned not null,  
+ status tinyint(1) unsigned not null default'1',  
+ id_users INT unsigned not null,  
+ id_match INT unsigned not null,
+ unique(id_users, id_match)
+); 
+
+CREATE TABLE Teams 
+( 
+ id INT unsigned PRIMARY KEY AUTO_INCREMENT,
+ name varchar(50) not null,
+ unique(name)
+); 
+
+CREATE TABLE Matchs 
+( 
+ id INT unsigned PRIMARY KEY AUTO_INCREMENT, 
+ date Date not null,  
+  hour time not null,  
+ result_team_a smallint unsigned not null,  
+ status tinyint(1) unsigned not null default'1',  
+ result_team_b smallint unsigned not null,  
+ id_team_a INT unsigned not null,  
+ id_team_b INT unsigned not null  
+); 
+
+ALTER TABLE Bets ADD FOREIGN KEY(id_users) REFERENCES Users (id);
+ALTER TABLE Bets ADD FOREIGN KEY(id_match) REFERENCES Matchs (id);
+ALTER TABLE Matchs ADD FOREIGN KEY(id_Team_a) REFERENCES Teams (id);
+ALTER TABLE Matchs ADD FOREIGN KEY(id_team_b) REFERENCES Teams (id);
