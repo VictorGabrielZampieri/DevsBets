@@ -1,0 +1,23 @@
+unit UDAO.Users;
+
+interface
+
+Uses
+  UDAO.Intf, System.JSON, DataSet.Serialize;
+
+type
+  TDAOUsers = class(TInterfacedObject, IDAO)
+    function ObterRegistros: TJSONArray;
+    function ProcurarPorId(const aIdentificador: Integer): TJSONObject;
+    function AdicionarRegistro(aRegistro: TJSONObject): Boolean;
+    function DeletarRegistro(const aIdentificador: Integer): Boolean;
+
+    function ValidarLogin(const aUser, aPassword: String): Boolean;
+  end;
+
+implementation
+
+Uses
+  FireDAC.Comp.Client, System.SysUtils, UUtils.Banco;
+
+end.
