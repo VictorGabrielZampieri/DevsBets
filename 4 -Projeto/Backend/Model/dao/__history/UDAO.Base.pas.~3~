@@ -7,7 +7,7 @@ Uses
 
 type
   TDAOBase = class(TInterfacedObject, IDAO)
-   protected
+   private
     FTabela : String;
    public
     function ObterRegistros: TJSONArray;

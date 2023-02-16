@@ -7,9 +7,10 @@ Uses
 
 type
   TDAOBase = class(TInterfacedObject, IDAO)
-   protected
-    FTabela : String;
-   public
+
+      FTabela : String;
+
+
     function ObterRegistros: TJSONArray;
     function ProcurarPorId(const aIdentificador: Integer): TJSONObject;
     function AdicionarRegistro(aRegistro: TJSONObject): Boolean;

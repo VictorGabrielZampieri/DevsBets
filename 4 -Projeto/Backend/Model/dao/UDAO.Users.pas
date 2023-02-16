@@ -2,15 +2,11 @@ unit UDAO.Users;
 
 interface
 
-Uses
-  UDAO.Intf, System.JSON, DataSet.Serialize;
+uses
+  System.JSON, DataSet.Serialize,UDAO.Base;
 
 type
-  TDAOUsers = class(TInterfacedObject, IDAO)
-    function ObterRegistros: TJSONArray;
-    function ProcurarPorId(const aIdentificador: Integer): TJSONObject;
-    function AdicionarRegistro(aRegistro: TJSONObject): Boolean;
-    function DeletarRegistro(const aIdentificador: Integer): Boolean;
+  TDAOUsers = class(TDAOBase)
 
     function ValidarLogin(const aUser, aPassword: String): Boolean;
   end;
@@ -20,58 +16,9 @@ implementation
 Uses
   FireDAC.Comp.Client, System.SysUtils, UUtil.Banco;
 
-  const
-    TABELA = 'users';
-
 { TDAOUsers }
 
-function TDAOUsers.AdicionarRegistro(aRegistro: TJSONObject): Boolean;
-begin
-  try
-    Result := TUtilBanco.AdicionarRegistro(TABELA, aRegistro.ToJSON);
-  except on E: Exception do
-    raise Exception.Create('Erro ao Adicionar Registro: '+ e.Message);
-  end;
-end;
 
-function TDAOUsers.DeletarRegistro(const aIdentificador: Integer): Boolean;
-begin
-  try
-    Result := TUtilBanco.RemoverRegistro(TABELA, aIdentificador);
-  except on E: Exception do
-    raise Exception.Create('Erro ao Remover Registro: '+ e.Message);
-  end;
-end;
-
-function TDAOUsers.ObterRegistros: TJSONArray;
-begin
-  try
-    Result := TUtilBanco.ExecutarConsulta(Format('SELECT * FROM %s',[TABELA]));
-  except on E: Exception do
-    raise Exception.Create('Erro ao Obter Registros: '+e.Message);
-  end;
-end;
-
-function TDAOUsers.ProcurarPorId(const aIdentificador: Integer): TJSONObject;
-var
-  xJSONArray : TJSONArray;
-begin
-  try
-    xJSONArray := TUtilBanco.ExecutarConsulta(Format('SELECT * FROM %s WHERE ID = %d', [TABELA,aIdentificador]));
-
-    if (xJSONArray.Count = 0) then
-    begin
-      Result := TJSONObject.Create;
-      xJSONArray.Free;
-      Exit;
-    end;
-
-    Result := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(xJSONArray[0].ToJSON),0) as TJSONObject;
-
-  except on E: Exception do
-    raise Exception.Create('Erro ao Obter o Registros: '+ e.Message);
-  end;
-end;
 
 function TDAOUsers.ValidarLogin(const aUser, aPassword: String): Boolean;
 var
