@@ -1,0 +1,10 @@
+unit UController.Users;
+
+interface
+
+uses
+  Horse, GBSwagger.Path.Attributes, UControllerBase
+
+implementation
+
+end.

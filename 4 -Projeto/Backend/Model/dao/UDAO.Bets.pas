@@ -6,7 +6,7 @@ uses
   UDAO.Base;
 
 type
-  TDAOUsers = class(TDaoBase)
+  TDAOBets = class(TDaoBase)
     public
       constructor Create;
   end;
@@ -15,7 +15,7 @@ implementation
 
 { TDAOUsers }
 
-constructor TDAOUsers.Create;
+constructor TDAOBets.Create;
 begin
   FTabela := 'Bets';
 end;

@@ -7,7 +7,8 @@ uses
 
 type
   TDAOUsers = class(TDAOBase)
-
+    public
+      constructor Create;
     function ValidarLogin(const aUser, aPassword: String): Boolean;
   end;
 
@@ -20,13 +21,18 @@ Uses
 
 
 
+constructor TDAOUsers.Create;
+begin
+  FTabela := 'users';
+end;
+
 function TDAOUsers.ValidarLogin(const aUser, aPassword: String): Boolean;
 var
   xJSONArray : TJSONArray;
 begin
   try
 
-    xJSONArray := TUtilBanco.ExecutarConsulta(Format('SELECT * FROM %s WHERE LOGIN = %s AND PASSWORD = %s', [TABELA, QuotedStr(aUser), QuotedStr(aPassword)]));
+    xJSONArray := TUtilBanco.ExecutarConsulta(Format('SELECT * FROM %s WHERE LOGIN = %s AND PASSWORD = %s', [FTabela, QuotedStr(aUser), QuotedStr(aPassword)]));
 
     Result := Assigned(xJSONArray) and (xJSONArray.Count > 0);
   except on E: Exception do
