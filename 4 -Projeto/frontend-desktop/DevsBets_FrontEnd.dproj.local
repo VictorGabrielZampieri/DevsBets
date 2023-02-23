@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/02/22 19:15:01.000.425,=C:\Users\mysql\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/02/22 19:15:59.000.236,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\UfrmLogin.fmx=C:\Users\mysql\Documents\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
+    <Transaction>2023/02/22 19:15:59.000.236,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\UfrmLogin.pas=C:\Users\mysql\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/02/22 19:16:14.000.730,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\DevsBets_FrontEnd.dproj=C:\Users\mysql\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2023/02/22 19:23:23.000.024,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit2.pas</Transaction>
+    <Transaction>2023/02/22 19:23:30.000.198,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\UfrmLogin.fmx=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\UaafrmLogin.fmx</Transaction>
+    <Transaction>2023/02/22 19:23:30.000.198,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\UfrmLogin.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\UaafrmLogin.pas</Transaction>
+    <Transaction>2023/02/22 19:24:09.000.978,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit2.fmx=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmLogin.fmx</Transaction>
+    <Transaction>2023/02/22 19:24:09.000.978,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit2.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmLogin.pas</Transaction>
+    <Transaction>2023/02/22 19:24:22.000.073,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\UaafrmLogin.pas=</Transaction>
+    <Transaction>2023/02/22 19:54:28.000.714,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
+    <Transaction>2023/02/22 20:12:36.000.141,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmLogin.Registry.pas</Transaction>
+    <Transaction>2023/02/22 20:12:36.000.141,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.fmx=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmLogin.Registry.fmx</Transaction>
+    <Transaction>2023/02/22 20:20:27.000.187,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit2.pas</Transaction>
+    <Transaction>2023/02/22 20:24:24.000.597,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit2.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmLogin.Authetication.pas</Transaction>
+    <Transaction>2023/02/22 20:24:24.000.597,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit2.fmx=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmLogin.Authetication.fmx</Transaction>
+    <Transaction>2023/02/22 21:28:21.273,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Bets.pas</Transaction>
+    <Transaction>2023/02/22 21:28:21.311,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Logins.pas</Transaction>
+    <Transaction>2023/02/22 21:28:21.366,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Matchs.pas</Transaction>
+    <Transaction>2023/02/22 21:28:21.400,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Teams.pas</Transaction>
+    <Transaction>2023/02/22 21:28:21.574,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Users.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<PEmbarcadeiro iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>

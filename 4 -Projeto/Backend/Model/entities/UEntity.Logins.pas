@@ -7,37 +7,38 @@ uses
 
 type
   TLogin = class
-  private
-    FLogin: String;
-    FPassword: String;
-    FToken: String;
-    function GetLogin: String;
-    function GetPassword: String;
-    function GetToken: String;
+    private
+      FLogin: String;
+      FPassword: String;
+      FToken: String;
 
-    procedure SetLogin(const Value: String);
-    procedure SetPassword(const Value: String);
-    procedure SetToken(const Value: String);
-  public
-    constructor Create(aLogin, aPassword: String);
+      function GetLogin: String;
+      function GetPassword: String;
+      function GetToken: String;
 
-    [SwagProp('Autenticação Login', True)]
-    property Login: String read GetLogin write SetLogin;
+      procedure SetLogin(const Value: String);
+      procedure SetPassword(const Value: String);
+      procedure SetToken(const Value: String);
+    public
+      constructor Create(const aLogin, aPassword: String);
 
-    [SwagProp('Autenticação Password', True)]
-    property Password: String read GetPassword write SetPassword;
+      [SwagProp('Autenticação Login', True)]
+      property Login: String read GetLogin write SetLogin;
 
-    [SwagProp('Autenticação Token', True)]
-    property Token: String read GetToken write SetToken;
+      [SwagProp('Autenticação Password', True)]
+      property Password: String read GetPassword write SetPassword;
+
+      [SwagProp('Autenticação Token', True)]
+      property Token: String read GetToken write SetToken;
   end;
 
 implementation
 
 { TLogin }
 
-constructor TLogin.Create(aLogin, aPassword: String);
+constructor TLogin.Create(const aLogin, aPassword: String);
 begin
-  FLogin := aLogin;
+  FLogin    := aLogin;
   FPassword := aPassword;
 end;
 

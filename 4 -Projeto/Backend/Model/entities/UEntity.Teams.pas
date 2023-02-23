@@ -3,31 +3,40 @@ unit UEntity.Teams;
 interface
 
 uses
-  JSON, GBSwagger.Model.Attributes;
+  GBSwagger.Model.Attributes,
+  System.JSON;
 
 type
   TTeam = class
-  private
-    FId: Integer;
-    FName: String;
-    FJSON: TJSONObject;
-    function GetId: Integer;
-    function GetJSON: TJSONObject;
-    function GetName: String;
+    private
+      FId: Integer;
+      FName: String;
+      FJSON: TJSONObject;
 
-    procedure SetId(const Value: Integer);
-    procedure SetName(const Value: String);
-  public
-    constructor Create(const aName: String; const aId: Integer = 0);
-    destructor Destroy; override;
+      function GetId: Integer;
+      function GetName: String;
+      function GetJSON: TJSONObject;
 
-    [SwagProp('Time Id', True)]
-    property Id: Integer read GetId write SetId;
+      procedure SetId(const Value: Integer);
+      procedure SetName(const Value: String);
+    public
+      constructor Create; overload;
+      constructor Create(const aId: Integer); overload;
+      constructor Create(const aName: String); overload;
+      constructor Create(const aId: Integer; aName: String); overload;
 
-    [SwagProp('Time Name', True)]
-    property Name: String read GetName write SetName;
+      destructor  Destroy; override;
 
-    property JSON: TJSONObject read GetJSON;
+      //Padrão de Projeto - Prototype
+      function Clone: TTeam;
+
+      [SwagProp('Time Id', True)]
+      property Id: Integer read GetId write SetId;
+
+      [SwagProp('Time Nome', True)]
+      property Name: String read GetName write SetName;
+
+      property JSON: TJSONObject read GetJSON;
   end;
 
 implementation
@@ -37,19 +46,44 @@ uses
 
 { TTeam }
 
-constructor TTeam.Create(const aName: String; const aId: Integer);
+constructor TTeam.Create;
 begin
   FJSON := TJSONObject.Create;
+end;
 
+constructor TTeam.Create(const aId: Integer);
+begin
   FId := aId;
+
+  Self.Create;
+end;
+
+function TTeam.Clone: TTeam;
+begin
+  Result := TTeam.Create;
+
+  Result.FId   := Self.FId;
+  Result.FName := Self.FName
+end;
+
+constructor TTeam.Create(const aName: String);
+begin
   FName := aName;
+
+  Self.Create;
+end;
+
+constructor TTeam.Create(const aId: Integer; aName: String);
+begin
+  FId   := aId;
+  FName := aName;
+
+  Self.Create;
 end;
 
 destructor TTeam.Destroy;
 begin
-  if (Assigned(FJSON)) then
-    FJSON.Free;
-
+  FreeAndNil(FJSON);
   inherited;
 end;
 

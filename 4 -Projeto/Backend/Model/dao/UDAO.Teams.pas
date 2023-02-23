@@ -11,10 +11,7 @@ type
       constructor Create;
   end;
 
-
 implementation
-
-
 
 { TDAOTeams }
 

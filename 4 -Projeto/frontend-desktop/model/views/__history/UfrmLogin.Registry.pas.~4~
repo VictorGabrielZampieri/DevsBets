@@ -1,0 +1,45 @@
+unit UfrmLogin.Registry;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, UfrmLogin,
+  FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Layouts, FMX.Edit;
+
+type
+  TfrmLoginRegistry = class(TForm)
+    rectPrincipal: TRectangle;
+    lytPrincipal: TLayout;
+    imgLogo: TImage;
+    lytBotoes: TLayout;
+    rectNome: TRectangle;
+    rectLogin: TRectangle;
+    rectVoltar: TRectangle;
+    Label3: TLabel;
+    rectPassword: TRectangle;
+    rectRegistrar: TRectangle;
+    Label2: TLabel;
+    edtLogin: TEdit;
+    edtNome: TEdit;
+    edtPassword: TEdit;
+    procedure rectVoltarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmLoginRegistry: TfrmLoginRegistry;
+
+implementation
+
+{$R *.fmx}
+
+procedure TfrmLoginRegistry.rectVoltarClick(Sender: TObject);
+begin
+//   Application.CreateForm(, pForm);
+end;
+
+end.

@@ -3,73 +3,143 @@ unit UEntity.Bets;
 interface
 
 uses
-  UEntity.Users, UEntity.Matchs, GBSwagger.Model.Attributes;
+  UEntity.Users,
+  UEntity.Matchs,
+  GBSwagger.Model.Attributes,
+  System.JSON;
 
 type
   TBet = class
-  private
-    FId: Integer;
-    FUser: TUser;
-    FMatch: TMatch;
-    FResultTeamA: Byte;
-    FResultTeamB: Byte;
-    FStatus: Byte;
-    function GetId: Integer;
-    function GetPartida: TMatch;
-    function GetResultadoTimeA: Byte;
-    function GetResultadoTimeB: Byte;
-    function GetStatus: Byte;
-    function GetUsuario: TUser;
+    private
+      FId: Integer;
+      FUser: TUser;
+      FMatch: TMatch;
+      FResultTeamA: Byte;
+      FResultTeamB: Byte;
+      FStatus: Byte;
+      FJSON: TJSONObject;
 
-    procedure SetId(const Value: Integer);
-    procedure SetPartida(const Value: TMatch);
-    procedure SetResultadoTimeA(const Value: Byte);
-    procedure SetResultadoTimeB(const Value: Byte);
-    procedure SetStatus(const Value: Byte);
-    procedure SetUsuario(const Value: TUser);
-  public
-    [SwagProp('Palpite Id', True)]
-    property Id: Integer read GetId write SetId;
+      function GetId: Integer;
+      function GetMatch: TMatch;
+      function GetResultTeamA: Byte;
+      function GetResultTeamB: Byte;
+      function GetStatus: Byte;
+      function GetUser: TUser;
+      function GetJSON: TJSONObject;
 
-    [SwagProp('Palpite Usuário', True)]
-    property Usuario: TUser read GetUsuario write SetUsuario;
+      procedure SetId(const Value: Integer);
+      procedure SetMatch(const Value: TMatch);
+      procedure SetResultTeamA(const Value: Byte);
+      procedure SetResultTeamB(const Value: Byte);
+      procedure SetStatus(const Value: Byte);
+      procedure SetUser(const Value: TUser);
+    public
+      constructor Create; overload;
+      constructor Create(const aId: Integer); overload;
+      constructor Create(const aMatch: TMatch; const aResultTeamA, aResultTeamB: Byte; const aUser: TUser); overload;
+      constructor Create(const aId: Integer; const aMatch: TMatch; const aResultTeamA, aResultTeamB, aStatus: Byte; const aUser: TUser); overload;
 
-    [SwagProp('Palpite Partida', True)]
-    property Partida: TMatch read GetPartida write SetPartida;
+      destructor Destroy; override;
 
-    [SwagProp('Palpite Resultado Time A', True)]
-    property ResultadoTimeA: Byte read GetResultadoTimeA
-      write SetResultadoTimeA;
+      [SwagProp('Palpite Id', True)]
+      property Id: Integer read GetId write SetId;
 
-    [SwagProp('Palpite Resultado Time B', True)]
-    property ResultadoTimeB: Byte read GetResultadoTimeB
-      write SetResultadoTimeB;
+      [SwagProp('Palpite Usuário', True)]
+      property User: TUser read GetUser write SetUser;
 
-    [SwagProp('Palpite Status', True)]
-    property Status: Byte read GetStatus write SetStatus;
+      [SwagProp('Palpite Partida', True)]
+      property Match: TMatch read GetMatch write SetMatch;
 
+      [SwagProp('Palpite Resultado Time A', True)]
+      property ResultTeamA: Byte read GetResultTeamA write SetResultTeamA;
+
+      [SwagProp('Palpite Resultado Time B', True)]
+      property ResultTeamB: Byte read GetResultTeamB write SetResultTeamB;
+
+      [SwagProp('Palpite Status', True)]
+      property Status: Byte read GetStatus write SetStatus;
+
+      property JSON: TJSONObject read GetJSON;
   end;
 
 implementation
 
+uses
+  System.SysUtils;
+
 { TBet }
+
+constructor TBet.Create;
+begin
+  FJSON := TJSONObject.Create;
+end;
+
+constructor TBet.Create(const aId: Integer);
+begin
+  FId := aId;
+
+  Self.Create;
+end;
+
+constructor TBet.Create(const aMatch: TMatch; const aResultTeamA, aResultTeamB: Byte; const aUser: TUser);
+begin
+  FMatch       := aMatch;
+  FResultTeamA := aResultTeamA;
+  FResultTeamB := aResultTeamB;
+  //Aqui vamos criar um novo objeto para não liberarmos
+  //Objeto do Singleton
+  FUser := TUser.Create(aUser.Id);
+
+  Self.Create;
+end;
+
+constructor TBet.Create(const aId: Integer; const aMatch: TMatch;
+  const aResultTeamA, aResultTeamB, aStatus: Byte; const aUser: TUser);
+begin
+  FId          := aId;
+  FMatch       := aMatch;
+  FResultTeamA := aResultTeamA;
+  FResultTeamB := aResultTeamB;
+  FStatus      := aStatus;
+  FUser        := aUser;
+
+  Self.Create;
+end;
+
+destructor TBet.Destroy;
+begin
+  FreeAndNil(FUser);
+  FreeAndNil(FMatch);
+  FreeAndNil(FJSON);
+  inherited;
+end;
 
 function TBet.GetId: Integer;
 begin
   Result := FId;
 end;
 
-function TBet.GetPartida: TMatch;
+function TBet.GetJSON: TJSONObject;
+begin
+  FJSON.AddPair('resultTeamA', FResultTeamA.ToString);
+  FJSON.AddPair('resultTeamB', FResultTeamB.ToString);
+  FJSON.AddPair('idUser', FUser.Id.ToString);
+  FJSON.AddPair('idMatch', FMatch.Id.ToString);
+
+  Result := FJSON;
+end;
+
+function TBet.GetMatch: TMatch;
 begin
   Result := FMatch;
 end;
 
-function TBet.GetResultadoTimeA: Byte;
+function TBet.GetResultTeamA: Byte;
 begin
   Result := FResultTeamA;
 end;
 
-function TBet.GetResultadoTimeB: Byte;
+function TBet.GetResultTeamB: Byte;
 begin
   Result := FResultTeamB;
 end;
@@ -79,7 +149,7 @@ begin
   Result := FStatus;
 end;
 
-function TBet.GetUsuario: TUser;
+function TBet.GetUser: TUser;
 begin
   Result := FUser;
 end;
@@ -89,17 +159,17 @@ begin
   FId := Value;
 end;
 
-procedure TBet.SetPartida(const Value: TMatch);
+procedure TBet.SetMatch(const Value: TMatch);
 begin
   FMatch := Value;
 end;
 
-procedure TBet.SetResultadoTimeA(const Value: Byte);
+procedure TBet.SetResultTeamA(const Value: Byte);
 begin
   FResultTeamA := Value;
 end;
 
-procedure TBet.SetResultadoTimeB(const Value: Byte);
+procedure TBet.SetResultTeamB(const Value: Byte);
 begin
   FResultTeamB := Value;
 end;
@@ -109,7 +179,7 @@ begin
   FStatus := Value;
 end;
 
-procedure TBet.SetUsuario(const Value: TUser);
+procedure TBet.SetUser(const Value: TUser);
 begin
   FUser := Value;
 end;

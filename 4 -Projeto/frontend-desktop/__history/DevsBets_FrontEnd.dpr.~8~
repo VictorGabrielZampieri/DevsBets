@@ -1,0 +1,16 @@
+program DevsBets_FrontEnd;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  UfrmLogin in 'model\views\UfrmLogin.pas' {frmLogin},
+  UfrmLogin.Registry in 'model\views\UfrmLogin.Registry.pas' {frmLoginRegistry},
+  UfrmLogin.Authetication in 'model\views\UfrmLogin.Authetication.pas' {frmLoginAuthentication};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TfrmLogin, frmLogin);
+  Application.Run;
+end.

@@ -1,4 +1,3 @@
-
 unit UUtil.Banco;
 
 interface
@@ -111,6 +110,9 @@ begin
     xQuery.Connection := FConexao;
     xQuery.Open(aSQL);
 
+    TDataSetSerializeConfig.GetInstance.Export.FormatDate := 'dd/mm/yyyy';
+    TDataSetSerializeConfig.GetInstance.Export.FormatTime := 'HH:mm:ss';
+
     Result := xQuery.ToJSONArray();
     Self.FecharConexao;
   except
@@ -156,18 +158,3 @@ begin
 end;
 
 end.
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Devs2Blu2022-Publico/UUtil.Banco.pas at main · armandocorrea/Devs2Blu2022-Publico
