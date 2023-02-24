@@ -1,0 +1,44 @@
+unit UService.Base;
+
+interface
+
+uses
+  UService.intf, REST.Client, REST.Types;
+
+type
+  TServiceBase = class(TInterfacedObject, IService)
+    private
+      FToken : String;
+    protected
+      FRESTClient: TRESTClient;
+      FRESTRequest: TRESTRequest;
+      FRESTResponse: TRESTResponse;
+
+    procedure CarregarToken; virtual; abstract;
+
+    procedure Registrar; virtual; abstract;
+    procedure Listar; virtual; abstract;
+    procedure Excluir; virtual; abstract;
+
+    function ObterRegistro(const aId: Integer): TObject; virtual; abstract;
+  public
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TServiceBase }
+
+constructor TServiceBase.Create;
+begin
+
+end;
+
+destructor TServiceBase.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

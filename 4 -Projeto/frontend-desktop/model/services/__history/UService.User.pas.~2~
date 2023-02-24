@@ -1,0 +1,21 @@
+unit UService;
+
+interface
+
+uses
+  UEntity.Users, UService.Base;
+
+type
+  TServiceUser = class
+    private
+      FUser: TUser;
+    public
+      constructor Create; overload;
+      constructor Create(aUser: TUser); overload;
+      destructor Destroy;
+  end;
+
+
+implementation
+
+end.

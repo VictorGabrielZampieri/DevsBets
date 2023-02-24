@@ -43,9 +43,9 @@ implementation
 uses
   UfrmLogin,
 //  UfrmHome,
-  UEntity.logins{,
+  UEntity.logins,
   UService.Intf,
-  UService.Login};
+  UService.Login;
 
 procedure TfrmLoginAuthentication.AbrirHome;
 begin
@@ -65,20 +65,19 @@ begin
 end;
 
 procedure TfrmLoginAuthentication.Logar;
-//var
-//  xServiceLogin: IService;
+var
+  xServiceLogin: IService;
 begin
-
   if (Trim(edtLogin.Text) = EmptyStr) then
     raise Exception.Create('Informe o Login');
 
   if (Trim(edtPassword.Text) = EmptyStr) then
     raise Exception.Create('Informe a Senha');
 
-//    xServiceLogin := TServiceLogin.Create(TLogin.Create(Trim(edtNome.Text), Trim(edtLogin.Text), Trim(edtPassword.Text)));
+    xServiceLogin := TServiceLogin.Create(TLogin.Create(Trim(edtLogin.Text), Trim(edtPassword.Text)));
 
     try
-//      TServiceLogin(xServiceLogin).Autenticar;
+      TServiceLogin(xServiceLogin).Autenticar;
       Self.AbrirHome;
     except on E: Exception do
       raise Exception.Create('Login: '+ E.Message);

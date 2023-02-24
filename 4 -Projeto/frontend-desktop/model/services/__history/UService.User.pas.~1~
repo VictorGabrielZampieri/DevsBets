@@ -1,0 +1,18 @@
+unit UService;
+
+interface
+
+uses
+  UEntity.Users, UService.Base;
+
+type
+  TServiceUser = class
+    private
+      FUser: TUser;
+
+  end;
+
+
+implementation
+
+end.

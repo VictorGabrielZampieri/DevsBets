@@ -43,8 +43,8 @@ implementation
 
 uses
   UfrmLogin,
-//  UService.User,
-  UEntity.Users
+  UService.User,
+  UEntity.Users, UService.intf
   ;
 
 
@@ -66,8 +66,8 @@ begin
 end;
 
 procedure TfrmLoginRegistry.Registrar;
-//var
-//  xServiceUser: IService;
+var
+  xServiceUser: IService;
 begin
   if (Trim(edtNome.Text) = EmptyStr) then
     raise Exception.Create('Informe o Nome');
@@ -78,10 +78,10 @@ begin
   if (Trim(edtPassword.Text) = EmptyStr) then
     raise Exception.Create('Informe a Senha');
 
-//    xServiceUser := TServiceUser.Create(TUser.Create(Trim(edtNome.Text), Trim(edtLogin.Text), Trim(edtPassword.Text)));
+    xServiceUser := TServiceUser.Create(TUser.Create(Trim(edtNome.Text), Trim(edtLogin.Text), Trim(edtPassword.Text)));
 
     try
-//      xServiceUser.Registrar;
+      xServiceUser.Registrar;
       ShowMessage('Usuário registrado com sucesso');
       Self.VoltarTela;
     except on E: Exception do
