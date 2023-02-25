@@ -1,0 +1,59 @@
+unit UfrmHome;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
+  FMX.ListBox, FMX.StdCtrls, FMX.Controls.Presentation, FMX.MultiView,
+  FMX.Objects;
+
+type
+  TfrmHome = class(TForm)
+    rectPrincipal: TRectangle;
+    lytContainer: TLayout;
+    imgLogo: TImage;
+    MultiView1: TMultiView;
+    StyleBook1: TStyleBook;
+    btnMenu: TSpeedButton;
+    Rectangle1: TRectangle;
+    lstMenu: TListBox;
+    lytLogo: TLayout;
+    Image1: TImage;
+    procedure lstMenuItemClick(const Sender: TCustomListBox;
+      const Item: TListBoxItem);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmHome: TfrmHome;
+
+implementation
+
+uses
+  UUtils.Enums;
+
+{$R *.fmx}
+
+procedure TfrmHome.lstMenuItemClick(const Sender: TCustomListBox;
+  const Item: TListBoxItem);
+begin
+  Self.RemoverTelaAnterior;
+
+case TEnumMenu(Item.Index) of
+  mnuTime:
+    Self.AbrirTeam;
+  mnuPartidas:
+    Self.AbrirMatch;
+  mnuPalpites:
+    Self.AbrirBet;
+  mnuSair:
+    Self.Close;
+end;
+  MultiView1.HideMaster;
+end;
+
+end.

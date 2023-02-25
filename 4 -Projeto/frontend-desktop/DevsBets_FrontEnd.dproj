@@ -290,6 +290,12 @@
         <DCCReference Include="model\utils\UUtils.Constants.pas"/>
         <DCCReference Include="model\services\UService.Login.pas"/>
         <DCCReference Include="model\services\UService.User.Authenticated.pas"/>
+        <DCCReference Include="model\views\UfrmHome.pas">
+            <Form>frmHome</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="model\utils\UUtils.Enums.pas"/>
+        <DCCReference Include="model\services\UService.Team.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

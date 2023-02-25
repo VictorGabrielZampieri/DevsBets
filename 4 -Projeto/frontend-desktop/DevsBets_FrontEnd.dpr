@@ -16,11 +16,17 @@ uses
   UService.User in 'model\services\UService.User.pas',
   UUtils.Constants in 'model\utils\UUtils.Constants.pas',
   UService.Login in 'model\services\UService.Login.pas',
-  UService.User.Authenticated in 'model\services\UService.User.Authenticated.pas';
+  UService.User.Authenticated in 'model\services\UService.User.Authenticated.pas',
+  UfrmHome in 'model\views\UfrmHome.pas' {frmHome},
+  UUtils.Enums in 'model\utils\UUtils.Enums.pas',
+  UService.Team in 'model\services\UService.Team.pas';
 
 {$R *.res}
 
 begin
+  //Ao fazer o Bepoly para o cliente comentar essa linha
+  ReportMemoryLeaksOnShutdown := True;
+
   Application.Initialize;
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.Run;

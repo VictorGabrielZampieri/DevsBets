@@ -42,19 +42,19 @@ implementation
 
 uses
   UfrmLogin,
-//  UfrmHome,
+  UfrmHome,
   UEntity.logins,
   UService.Intf,
   UService.Login;
 
 procedure TfrmLoginAuthentication.AbrirHome;
 begin
-//   if not(Assigned(frmHome)) then
-//    frmHome := TfrmHome.Create(Application);
-//
-//    frmHome.Show;
-//    Application.MainForm := frmHome;
-//    Self.Close;
+   if not(Assigned(frmHome)) then
+    frmHome := TfrmHome.Create(Application);
+
+    frmHome.Show;
+    Application.MainForm := frmHome;
+    Self.Close;
 end;
 
 procedure TfrmLoginAuthentication.FormClose(Sender: TObject;
