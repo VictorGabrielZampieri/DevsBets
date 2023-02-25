@@ -20,8 +20,8 @@
     <Transaction>2023/02/22 21:28:21.000.574,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Users.pas</Transaction>
     <Transaction>2023/02/22 21:28:21.000.400,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Teams.pas</Transaction>
     <Transaction>2023/02/22 21:28:21.000.366,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Matchs.pas</Transaction>
-    <Transaction>2023/02/22 21:28:21.000.311,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Logins.pas</Transaction>
     <Transaction>2023/02/22 21:28:21.000.273,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Bets.pas</Transaction>
+    <Transaction>2023/02/22 21:28:21.000.311,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\Backend\Model\entities\UEntity.Logins.pas</Transaction>
     <Transaction>2023/02/23 18:40:53.000.277,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
     <Transaction>2023/02/23 18:42:46.000.072,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\services\UService.intf.pas</Transaction>
     <Transaction>2023/02/23 18:48:17.000.808,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
@@ -36,12 +36,14 @@
     <Transaction>2023/02/23 21:19:12.000.082,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
     <Transaction>2023/02/23 21:26:22.000.102,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\services\UService.User.Authenticated.pas</Transaction>
     <Transaction>2023/02/24 18:57:29.000.611,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
-    <Transaction>2023/02/24 18:57:56.000.109,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmHome.fmx=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.fmx</Transaction>
     <Transaction>2023/02/24 18:57:56.000.109,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmHome.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
+    <Transaction>2023/02/24 18:57:56.000.109,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\views\UfrmHome.fmx=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.fmx</Transaction>
     <Transaction>2023/02/24 20:04:32.000.910,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
     <Transaction>2023/02/24 20:04:52.000.504,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\utils\UUtils.Enums.pas</Transaction>
     <Transaction>2023/02/24 21:05:14.082,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
     <Transaction>2023/02/24 21:05:35.684,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\services\UService.Team.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
+    <Transaction>2023/02/24 21:50:53.247,=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
+    <Transaction>2023/02/24 21:51:16.040,C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\model\services\UService.Match.pas=C:\Users\mysql\Documents\DevsBets\4 -Projeto\frontend-desktop\Unit1.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<PEmbarcadeiro iOSSimulator="iPhone5"/>
