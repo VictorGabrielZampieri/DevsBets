@@ -1,0 +1,39 @@
+program DevsBets_FrontEnd;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  UfrmLogin in 'model\views\UfrmLogin.pas' {frmLogin},
+  UfrmLogin.Registry in 'model\views\UfrmLogin.Registry.pas' {frmLoginRegistry},
+  UfrmLogin.Authetication in 'model\views\UfrmLogin.Authetication.pas' {frmLoginAuthentication},
+  UEntity.Bets in '..\Backend\Model\entities\UEntity.Bets.pas',
+  UEntity.Logins in '..\Backend\Model\entities\UEntity.Logins.pas',
+  UEntity.Matchs in '..\Backend\Model\entities\UEntity.Matchs.pas',
+  UEntity.Teams in '..\Backend\Model\entities\UEntity.Teams.pas',
+  UEntity.Users in '..\Backend\Model\entities\UEntity.Users.pas',
+  UService.intf in 'model\services\UService.intf.pas',
+  UService.Base in 'model\services\UService.Base.pas',
+  UService.User in 'model\services\UService.User.pas',
+  UUtils.Constants in 'model\utils\UUtils.Constants.pas',
+  UService.Login in 'model\services\UService.Login.pas',
+  UService.User.Authenticated in 'model\services\UService.User.Authenticated.pas',
+  UfrmHome in 'model\views\UfrmHome.pas' {frmHome},
+  UUtils.Enums in 'model\utils\UUtils.Enums.pas',
+  UService.Team in 'model\services\UService.Team.pas',
+  UService.Match in 'model\services\UService.Match.pas',
+  UUtils.Functions in 'model\utils\UUtils.Functions.pas',
+  UService.Bet in 'model\services\UService.Bet.pas',
+  UfraTeams in 'model\views\UfraTeams.pas' {fraTeams: TFrame},
+  UfraPartidas in 'model\views\UfraPartidas.pas' {fraMatch: TFrame},
+  UfraBets in 'model\views\UfraBets.pas' {fraBet: TFrame};
+
+{$R *.res}
+
+begin
+  //Ao fazer o Bepoly para o cliente comentar essa linha
+  ReportMemoryLeaksOnShutdown := True;
+
+  Application.Initialize;
+  Application.CreateForm(TfrmLogin, frmLogin);
+  Application.Run;
+end.

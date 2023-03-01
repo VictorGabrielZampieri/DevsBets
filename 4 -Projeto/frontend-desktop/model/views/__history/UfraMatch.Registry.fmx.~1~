@@ -1,0 +1,5 @@
+object fraMatchRegistry: TfraMatchRegistry
+  Size.Width = 500.000000000000000000
+  Size.Height = 400.000000000000000000
+  Size.PlatformDefault = False
+end

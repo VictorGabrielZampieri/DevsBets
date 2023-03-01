@@ -3,38 +3,44 @@ unit UService.Match;
 interface
 
 uses
-  UEntity.Matchs,
   UService.Base,
-  Generics.Collections;
+  Generics.Collections,
+  UEntity.Matchs;
 
 type
   TServiceMatch = class(TServiceBase)
-  private
-    FMatch: TMatch;
-    FMatchs: TObjectList<TMatch>;     //Diferenca do listo: o tObjectList não precisa passar pelo freeAndNil
-    function GetMatchs: TObjectList<TMatch>;
-  public
-    constructor Create; overload;
-    constructor Create(aMatch: TMatch); overload;
-    destructor Destroy; override;
+    private
+      FMatch: TMatch;
+      FMatchs: TObjectList<TMatch>;
 
-    procedure Registrar; override;
-    procedure Listar; override;
-    procedure Excluir; override;
+      function GetMatchs: TObjectList<TMatch>;
 
-    function ObterRegistro(const aId: Integer): TObject; override;
+      procedure PreencherMatchs(const aJsonMatchs: String);
+    public
+      constructor Create; overload;
+      constructor Create(aMatch: TMatch); overload;
+      destructor  Destroy; override;
 
-    property Match: TObjectList<TMatch> read GetMatchs;
+      procedure Registrar; override;
+      procedure Listar; override;
+      procedure Excluir; override;
+
+      function ObterRegistro(const aId: Integer): TObject; override;
+
+      property Matchs: TObjectList<TMatch> read GetMatchs;
   end;
 
 implementation
 
 uses
-  System.SysUtils,
-  System.JSON, UUtils.Constants, DataSet.Serialize,
-  FireDAC.Comp.Client, REST.Types;
+  System.SysUtils, REST.Types,
+  UUtils.Constants, DataSet.Serialize,
+  FireDAC.comp.Client,
+  UService.Intf, UService.Team,
+  UEntity.Teams,
+  UUtils.Functions;
 
-{ TServiceTeam }
+{ TServiceMatch }
 
 constructor TServiceMatch.Create;
 begin
@@ -46,6 +52,7 @@ end;
 constructor TServiceMatch.Create(aMatch: TMatch);
 begin
   FMatch := aMatch;
+
   Self.Create;
 end;
 
@@ -53,31 +60,32 @@ destructor TServiceMatch.Destroy;
 begin
   FreeAndNil(FMatch);
   FreeAndNil(FMatchs);
+
   inherited;
 end;
 
 procedure TServiceMatch.Excluir;
 begin
-
   if (not Assigned(FMatch)) or (FMatch.Id = 0) then
-    raise Exception.Create('Nenhum time foi encontrado para exclusão.');
+    raise Exception.Create('Nenhuma Partida foi escolhida para exclusão.');
 
-    try
-      FRESTClient.BaseURL := Format(URL_BASE_MATCH + '/d', [FMatch.Id]);
-      FRESTRequest.Method := rmDELETE;
-      FRESTRequest.Execute;
+  try
+    FRESTClient.BaseURL := Format(URL_BASE_MATCH + '/%d', [FMatch.Id]);
+    FRESTRequest.Method := rmDelete;
+    FRESTRequest.Execute;
 
-      case FRESTResponse.StatusCode of
-        API_SUCESSO_SEM_RETORNO:
-          Exit;
-        API_NAO_AUTORIZADO:
-          raise Exception.Create('Usuário não encontrado.');
-        else
-          raise Exception.Create('Erro não catalogado.');
-      end;
-    except on E: Exception do
-      raise Exception.Create(e.Message);
+    case FRESTResponse.StatusCode of
+      API_SUCESSO_SEM_RETORNO:
+        Exit;
+      API_NAO_AUTORIZADO:
+        raise Exception.Create('Usuário não autorizado.');
+      else
+        raise Exception.Create('Erro não catalogado.');
     end;
+  except
+    on e: exception do
+      raise Exception.Create(e.Message);
+  end;
 end;
 
 function TServiceMatch.GetMatchs: TObjectList<TMatch>;
@@ -86,92 +94,96 @@ begin
 end;
 
 procedure TServiceMatch.Listar;
-var
-  xMemTable : TFDMemTable;
 begin
-  FMatchs.Clear;
-
-  xMemTable := TFDMemTable.Create(nil);
   try
-    try
-      FRESTClient.BaseURL := URL_BASE_MATCH;
-      FRESTRequest.Method := rmGet;
-      FRESTRequest.Execute;
+    FRESTClient.BaseURL := URL_BASE_MATCH;
+    FRESTRequest.Method := rmGet;
+    FRESTRequest.Execute;
 
-      case FRESTResponse.StatusCode of
-        API_SUCESSO:
-        begin
-          xMemTable.LoadFromJSON(FRESTResponse.Content);
-
-          while not xMemTable.Eof do
-          begin
-            FMatchs.Add(TMatch.Create(xMemTable.FieldByName('id').AsInteger,
-            xMemTable.FieldByName('name').AsString));
-            xMemTable.Next;
-          end;
-        end;
-        API_NAO_AUTORIZADO:
-          raise Exception.Create('Usuário não autorizado.');
-        else
-          raise Exception.Create('Erro ao carregar a lista de times. Código do Erro: ' + FRESTResponse.StatusCode.ToString);
-      end;
-    except on E: Exception do
-      raise Exception.Create(e.Message);
+    case FRESTResponse.StatusCode of
+      API_SUCESSO:
+        Self.PreencherMatchs(FRESTResponse.Content);
+      API_NAO_AUTORIZADO:
+        raise Exception.Create('Usuário não autorizado.');
+      else
+        raise Exception.Create('Erro ao carregar a lista de Times. Código do Erro: ' + FRESTResponse.StatusCode.ToString);
     end;
-  finally
-    FreeAndNil(xMemTable);
+  except
+    on e: exception do
+      raise Exception.Create(e.Message);
   end;
-  inherited;
-
 end;
 
 function TServiceMatch.ObterRegistro(const aId: Integer): TObject;
-var
-  xMemTable: TFDMemTable;
 begin
   Result := nil;
+  //Método sem implementação no momento
+end;
 
-  xMemTable := TFDMemTable.Create(nil);
+procedure TServiceMatch.PreencherMatchs(const aJsonMatchs: String);
+var
+  xMemTable: TFDMemTable;
+  xMemTableTeam: TFDMemTable;
+  xTeamA, xTeamB: TTeam;
+  xStatus: Byte;
+begin
+  FMatchs.Clear;
+
+  xMemTable     := TFDMemTable.Create(nil);
+  xMemTableTeam := TFDMemTable.Create(nil);
 
   try
-    FRESTClient.BaseURL := URL_BASE_TEAM + '/' + aId.ToString;
-    FRESTRequest.Method := rmGET;
-    FRESTRequest.Execute;
+    xMemTable.LoadFromJSON(FRESTResponse.Content);
 
-    if (FRESTResponse.StatusCode = API_SUCESSO) then
+    while not xMemTable.Eof do
     begin
-      xMemTable.LoadFromJSON(FRESTResponse.Content);
+      xMemTableTeam.LoadFromJSON(xMemTable.FieldByName('team_A').AsString);
+      xTeamA := TTeam.Create(xMemTableTeam.FieldByName('name').AsString);
 
-      if (xMemTable.FindFirst) then
-        Result := TTeam.Create(xMemTable.FieldByName('id').AsInteger);
+      xMemTableTeam.LoadFromJSON(xMemTable.FieldByName('team_B').AsString);
+      xTeamB := TTeam.Create(xMemTableTeam.FieldByName('name').AsString);
+
+      xStatus := TUtilsFunctions.IIF<Byte>(
+        xMemTable.FieldByName('status').AsString = 'true',
+        1, 0);
+
+      FMatchs.Add(TMatch.Create(xMemTable.FieldByName('id').AsInteger,
+                                xMemTable.FieldByName('date').AsDateTime,
+                                xMemTable.FieldByName('hour').AsDateTime,
+                                xTeamA,
+                                xTeamB,
+                                xMemTable.FieldByName('result_Team_A').AsInteger,
+                                xMemTable.FieldByName('result_Team_B').AsInteger,
+                                xStatus));
+
+      xMemTable.Next;
     end;
   finally
     FreeAndNil(xMemTable);
+    FreeAndNil(xMemTableTeam);
   end;
 end;
 
 procedure TServiceMatch.Registrar;
 begin
-   try
-    FRESTClient.BaseURL := URL_BASE_TEAM;
-    FRESTRequest.Method := rmPOST;
-    FRESTRequest.Params.AddBody(FTeam.JSON);
+  try
+    FRESTClient.BaseURL := URL_BASE_MATCH;
+    FRESTRequest.Params.AddBody(FMatch.JSON);
+    FRESTRequest.Method := rmPost;
     FRESTRequest.Execute;
 
     case FRESTResponse.StatusCode of
       API_CRIADO:
         Exit;
       API_NAO_AUTORIZADO:
-        raise Exception.Create('Usuario não autorizado.');
-    else
-      raise Exception.Create('Erro não catalogado.');
+        raise Exception.Create('Usuário não autorizado.');
+      else
+        raise Exception.Create('Erro não catalogado.');
     end;
-
   except
-    on E: Exception do
-      raise Exception.Create(E.Message);
+    on e: exception do
+      raise Exception.Create(e.Message);
   end;
-
 end;
 
 end.

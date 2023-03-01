@@ -1,0 +1,45 @@
+unit UfraMatch.Registry;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
+  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
+  FMX.Objects, FMX.Layouts, FMX.Edit, FMX.Controls.Presentation, FMX.ListBox, UService.intf;
+
+type
+  TfraMatchRegistry = class(TFrame)
+    rectPrincipal: TRectangle;
+    lytPrincipal: TLayout;
+    imgLogo: TImage;
+    lytBotoes: TLayout;
+    rectSalvar: TRectangle;
+    Label1: TLabel;
+    rectTimeB: TRectangle;
+    rectTimeA: TRectangle;
+    lblX: TLabel;
+    rectVoltar: TRectangle;
+    Label3: TLabel;
+    cmbTimeA: TComboBox;
+    cmbTimeB: TComboBox;
+    rectData: TRectangle;
+    edtData: TEdit;
+    rectHora: TRectangle;
+    edtHora: TEdit;
+  private
+    { Private declarations }
+    FServiceTeam: IService;
+
+    procedure VoltarTela;
+    procedure CarregarTeams;
+    procedure Registrar;
+  public
+    { Public declarations }
+    constructor Create(aowner: TComponent); override;
+  end;
+
+implementation
+
+{$R *.fmx}
+
+end.

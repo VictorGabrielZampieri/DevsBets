@@ -1,0 +1,13 @@
+object fraMatchRegistry: TfraMatchRegistry
+  Size.Width = 500.000000000000000000
+  Size.Height = 400.000000000000000000
+  Size.PlatformDefault = False
+  object Rectangle1: TRectangle
+    Align = Client
+    Fill.Color = xFF8FC1B5
+    Size.Width = 500.000000000000000000
+    Size.Height = 400.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Color = claWhite
+  end
+end

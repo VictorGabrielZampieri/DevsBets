@@ -1,0 +1,120 @@
+unit UfraTeams;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
+  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
+  FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
+  FMX.ListView, FMX.Objects, FMX.Layouts, FMX.Controls.Presentation, UEntity.Teams;
+
+type
+  TfraTeams = class(TFrame)
+    rectPrincipal: TRectangle;
+    rectToolbar: TRectangle;
+    rectExcluir: TRectangle;
+    Label1: TLabel;
+    rectNovo: TRectangle;
+    Label2: TLabel;
+    lytPrincipal: TLayout;
+    imgLogo: TImage;
+    lstTimes: TListView;
+    procedure rectExcluirClick(Sender: TObject);
+    procedure rectNovoClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure CarregarRegistros;
+    procedure AbrirTeamRegistry;
+    procedure PreencherTeams(aTeam: TTeam);
+    procedure ExcluirRegistro;
+  public
+    { Public declarations }
+    constructor Create(aOwner: TComponent); override;
+  end;
+
+var
+  fraTeam: TfraTeams;
+
+implementation
+
+{$R *.fmx}
+
+uses
+  UfraTeams.Registry, UService.intf, UService.Team;
+
+{ TfraTeams }
+
+procedure TfraTeams.AbrirTeamRegistry;
+begin
+   if not Assigned(fraTeamRegistry) then
+    fraTeamRegistry := TfraTeamsRegistry.Create(Application);
+
+  fraTeamRegistry.Align := TAlignLayout.Center;
+
+  Self.Parent.AddObject(fraTeamRegistry);
+  FreeAndNil(fraTeam);
+end;
+
+procedure TfraTeams.CarregarRegistros;
+var
+  xServiceTeams: IService;
+  xTeam: TTeam;
+begin
+  lstTimes.Items.Clear;
+
+  xServiceTeams := TServiceTeam.Create;
+  xServiceTeams.Listar;
+  for xTeam in TServiceTeam(xServiceTeams).Teams do
+    Self.PreencherTeams(xTeam);
+end;
+
+constructor TfraTeams.Create(aOwner: TComponent);
+begin
+  inherited Create (aOwner);
+  Self.CarregarRegistros;
+end;
+
+procedure TfraTeams.ExcluirRegistro;
+var
+  xServiceTeam : IService;
+  xTeam : TTeam;
+  xItem: TListViewItem;
+begin
+  if lstTimes.ItemIndex = -1 then
+    Exit;
+
+  xItem := lstTimes.Items[lstTimes.ItemIndex];
+  xTeam := TTeam.Create(xItem.Tag);
+
+
+  xServiceTeam := TServiceTeam.Create(xTeam);
+  try
+    xServiceTeam.Excluir;
+    ShowMessage('Registro Excluido.');
+  finally
+    Self.CarregarRegistros;
+  end;
+
+end;
+
+procedure TfraTeams.PreencherTeams(aTeam: TTeam);
+var
+  xItem : TListViewItem;
+begin
+  xItem           := lstTimes.Items.Add;
+  xItem.Tag       := aTeam.Id;
+
+   TListItemText(xItem.Objects.FindDrawable('txtTime')).Text := aTeam.Name;
+end;
+
+procedure TfraTeams.rectExcluirClick(Sender: TObject);
+begin
+  Self.ExcluirRegistro;
+end;
+
+procedure TfraTeams.rectNovoClick(Sender: TObject);
+begin
+  Self.AbrirTeamRegistry;
+end;
+
+end.
